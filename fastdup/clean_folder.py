@@ -1,13 +1,13 @@
 import fastdup
 fd = fastdup.create(work_dir="/home/clean_data/",
                     input_dir="/home/data/")
-fd.run(ccthreshold=0.1)
+fd.run(ccthreshold=0.93)
 
 fd.summary()
 
-fd.vis.duplicates_gallery(num_images=500)
-fd.vis.outliers_gallery(num_images=500)
-fd.vis.component_gallery(num_images=500)
+# fd.vis.duplicates_gallery(num_images=1162)
+# fd.vis.outliers_gallery(num_images=1162)
+# fd.vis.component_gallery(num_images=1162)
 
 connected_components_df , _ = fd.connected_components()
 connected_components_df.to_csv('/home/clean_data/connected_components_df.csv')
@@ -15,7 +15,7 @@ connected_components_df.to_csv('/home/clean_data/connected_components_df.csv')
 
 def get_clusters(df, sort_by='count', min_count=2, ascending=False):
     # columns to aggregate
-    agg_dict = {'img_filename': list, 'mean_distance': max, 'count': len}
+    agg_dict = {'filename': list, 'mean_distance': max, 'count': len}
 
     if 'label' in df.columns:
         agg_dict['label'] = list
