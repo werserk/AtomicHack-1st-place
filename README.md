@@ -1,5 +1,8 @@
 # AtomicHack
 
+Link to Atomichack: https://atomichack.ru/ \
+Link to GitHub: https://github.com/werserk/AtomicHack
+
 ## Описание
 
 Создать программный модуль с использованием ИИ, который автоматически выявляет и классифицирует дефекты сварных швов по
