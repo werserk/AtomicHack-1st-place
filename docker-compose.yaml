@@ -1,0 +1,12 @@
+version: '3'
+services:
+  ray-head:
+    image: karpadoni/fastdup-ubuntu-20.04
+#    user: "1000:1000"
+
+    volumes:
+      - /home/tema/CODE/AtomicHack/fastdup:/fastdup
+      - /home/tema/CODE/AtomicHack/data/prepare_data/images:/home/data
+      - /home/tema/CODE/AtomicHack/clean_data:/home/clean_data
+    command: >
+      bash -c "pip install --upgrade fastdup && echo 'Commands executed, container ready' && python3 /fastdup/clean_folder.py"
