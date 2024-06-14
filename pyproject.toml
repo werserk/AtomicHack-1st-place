@@ -15,6 +15,10 @@ black = {extras = ["jupyter"], version = "^24.4.2"}
 flake8 = "^7.0.0"
 tqdm = "^4.66.4"
 
+
+[tool.poetry.group.web.dependencies]
+opencv-python = "^4.10.0.82"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
