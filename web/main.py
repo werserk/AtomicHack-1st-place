@@ -10,7 +10,7 @@ def main():
     page_names_to_funcs = {
         "Приветственная страница": welcome.welcome_page,
         "Обработка с камеры": capture_video.capture_video_page,
-        "Обработка изображений": upload_image.upload_image_page,
+        "Обработка файлов": upload_image.upload_image_page,
     }
 
     demo_name = st.sidebar.selectbox("Выберите страницу", page_names_to_funcs.keys())
