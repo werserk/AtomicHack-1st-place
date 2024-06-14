@@ -18,6 +18,8 @@ tqdm = "^4.66.4"
 
 [tool.poetry.group.web.dependencies]
 opencv-python = "^4.10.0.82"
+streamlit = "^1.35.0"
+streamlit-webrtc = "^0.47.7"
 
 [build-system]
 requires = ["poetry-core"]
