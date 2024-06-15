@@ -1,3 +1,5 @@
+import time
+
 import cv2
 import numpy as np
 import streamlit as st
@@ -17,7 +19,9 @@ def upload_image_page():
         original_image = cv2.imdecode(file_bytes, 1)
 
         # try:
+        start_time = time.time()
         processed_image = processor(original_image)
+        print(f"Time: {time.time() - start_time}")
 
         # Отображаем оригинальное и обработанное изображение рядом
         col1, col2 = st.columns(2)

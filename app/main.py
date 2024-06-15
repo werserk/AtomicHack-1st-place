@@ -7,7 +7,7 @@ def main():
     st.set_page_config(
         page_title="Defect Detection App",
         page_icon="🤖",
-        layout="wide",
+        # layout="wide",
     )
 
     page_names_to_funcs = {

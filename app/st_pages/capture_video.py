@@ -1,7 +1,8 @@
+import time
+
 import av
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer
-
 from utils import Processor
 
 
@@ -12,7 +13,10 @@ class VideoCallback:
     def __call__(self, frame: av.VideoFrame) -> av.VideoFrame:
         image = frame.to_ndarray(format="bgr24")
 
+        start_time = time.time()
         processed_image = self.processor(image)
+        delta_time = time.time() - start_time
+        print(f"FPS: {1 / delta_time: .1f} / Time: {delta_time:.3f}")
 
         return av.VideoFrame.from_ndarray(processed_image, format="bgr24")
 
@@ -29,5 +33,5 @@ def capture_video_page():
         key="defect-detection",
         video_frame_callback=video_frame_callback,
         media_stream_constraints={"video": True, "audio": False},
-        async_processing=True,
+        async_processing=False,
     )
