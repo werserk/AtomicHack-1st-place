@@ -1,7 +1,9 @@
+from io import BytesIO
+
 import cv2
 import numpy as np
 from fastapi import FastAPI, UploadFile, File
-from typing import List
+from fastapi.responses import StreamingResponse
 
 app = FastAPI()
 
@@ -26,7 +28,7 @@ async def process_image(file: UploadFile = File(...)):
     processed_img = dummy_neuro_processing(img)
 
     _, encoded_img = cv2.imencode('.png', processed_img)
-    return {"image": encoded_img.tobytes()}
+    return StreamingResponse(BytesIO(encoded_img.tobytes()), media_type="image/png")
 
 
 if __name__ == "__main__":

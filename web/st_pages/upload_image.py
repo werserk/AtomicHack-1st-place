@@ -1,41 +1,42 @@
 import cv2
 import numpy as np
 import streamlit as st
-
-from utils import dummy_neuro_processing
+import requests
 
 
 def upload_image_page():
     st.header("Загрузить изображение")
-    uploaded_file = st.file_uploader(
-        "Загрузите изображение", type=["jpg", "jpeg", "png"]
-    )
+    uploaded_file = st.file_uploader("Загрузите изображение", type=["jpg", "jpeg", "png"])
 
     if uploaded_file is not None:
         file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
         original_image = cv2.imdecode(file_bytes, 1)
 
-        # Process the image using the dummy neuro function
-        processed_image = dummy_neuro_processing(original_image)
+        try:
+            # Отправляем изображение на сервер для обработки
+            files = {'file': uploaded_file.getvalue()}
+            response = requests.post("http://localhost:8000/process-image/", files=files)
 
-        # Display the original and processed images side by side
-        col1, col2 = st.columns(2)
+            if response.status_code == 200:
+                processed_image = cv2.imdecode(np.frombuffer(response.content, np.uint8), cv2.IMREAD_COLOR)
 
-        with col1:
-            st.header("Оригинальное изображение")
-            st.image(
-                cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB), use_column_width=True
-            )
+                # Отображаем оригинальное и обработанное изображение рядом
+                col1, col2 = st.columns(2)
 
-        with col2:
-            st.header("Обработанное изображение")
-            st.image(
-                cv2.cvtColor(processed_image, cv2.COLOR_BGR2RGB), use_column_width=True
-            )
+                with col1:
+                    st.header("Оригинальное изображение")
+                    st.image(cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB), use_column_width=True)
 
-        # Description block
-        st.markdown("### Описание результатов")
-        with st.expander("Показать/Скрыть детали"):
-            st.write(
-                "Изображение обработано с использованием модуля dummy neuro. Здесь отображаются результаты."
-            )
+                with col2:
+                    st.header("Обработанное изображение")
+                    st.image(cv2.cvtColor(processed_image, cv2.COLOR_BGR2RGB), use_column_width=True)
+
+                # Блок описания
+                st.markdown("### Описание результатов")
+                with st.expander("Показать/Скрыть детали"):
+                    st.write(
+                        "Изображение обработано с использованием модуля dummy neuro. Здесь отображаются результаты.")
+            else:
+                st.error("Ошибка при обработке изображения.")
+        except Exception as e:
+            st.error(f"Ошибка: {e}")
