@@ -5,7 +5,10 @@ from st_pages import capture_video, upload_image, welcome
 
 def main():
     st.set_page_config(
-        page_title="Defect Detection App", page_icon=":atom:")
+        page_title="Defect Detection App",
+        page_icon="🤖",
+        layout="wide",
+    )
 
     page_names_to_funcs = {
         "Приветственная страница": welcome.welcome_page,

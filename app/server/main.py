@@ -27,7 +27,7 @@ async def process_image(file: UploadFile = File(...)):
 
     processed_img = dummy_neuro_processing(img)
 
-    _, encoded_img = cv2.imencode('.png', processed_img)
+    _, encoded_img = cv2.imencode(".png", processed_img)
     return StreamingResponse(BytesIO(encoded_img.tobytes()), media_type="image/png")
 
 
