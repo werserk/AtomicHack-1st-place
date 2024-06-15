@@ -3,9 +3,20 @@ version: '3.7'
 services:
     app:
         build: ./
-        command: streamlit run app/main.py --server.port 8501
         volumes:
-            - ./:/usr/src/app
+            - ./app:/app/app/
         ports:
             - 8501:8501
+
         image: yourstreamlitapp:latest
+
+#        labels:
+#            - "traefik.enable=true"
+#            - "traefik.http.routers.dockage1.entrypoints=web, websecure"
+#            - "traefik.http.routers.dockage1.rule=Host(`test.xplogene-ai.com`)"
+#            - "traefik.http.routers.dockage1.tls=true"
+#            - "traefik.http.routers.dockage1.tls.certresolver=production"
+#            - "traefik.tcp.services.kafka-broker.loadbalancer.server.port=8501"
+#
+        command: >
+            bash -c "ls -la && streamlit run app/main.py --server.port 8501"
