@@ -1,9 +1,11 @@
 from io import BytesIO
 
+import uvicorn
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import StreamingResponse
 
 from app.neuro.roboflow_net import RoboflowModel, RoboflowVisualizer
+from app.server.config import UvicornConfig
 from app.server.utils import decode_image, encode_image
 
 app = FastAPI()
@@ -21,7 +23,5 @@ async def predict_by_roboflow(file: UploadFile = File(...)):
     return StreamingResponse(BytesIO(bytes_image), media_type="image/png")
 
 
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+def start_uvicorn():
+    uvicorn.run(app, host=UvicornConfig.HOST, port=UvicornConfig.PORT)
