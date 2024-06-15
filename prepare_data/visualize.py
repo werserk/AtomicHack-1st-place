@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import patches
+
+
 def add_labels_to_image(image: np.ndarray, defects: dict, path_to_save: str, color_map: dict):
     fig, ax = plt.subplots(1)
 
