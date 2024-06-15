@@ -6,7 +6,7 @@ authors = ["team 4U (werserk, blogerlu)"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">3.9.7,<=3.12"
+python = ">3.9.7,<=3.12.3"
 roboflow = "^1.1.32"
 supervision = "^0.21.0"
 
