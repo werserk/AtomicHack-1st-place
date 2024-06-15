@@ -15,6 +15,11 @@ black = {extras = ["jupyter"], version = "^24.4.2"}
 flake8 = "^7.0.0"
 tqdm = "^4.66.4"
 
+
+[tool.poetry.group.neuro.dependencies]
+roboflow = "^1.1.32"
+supervision = "^0.21.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
