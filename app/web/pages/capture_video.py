@@ -2,12 +2,12 @@ import av
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer
 
-from app.web.utils import Processor
+from app.web.utils import get_processor
 
 
 class VideoCallback:
-    def __init__(self, processor: Processor):
-        self.processor = processor
+    def __init__(self):
+        self.processor = get_processor()
 
     def __call__(self, frame: av.VideoFrame) -> av.VideoFrame:
         image = frame.to_ndarray(format="bgr24")
@@ -21,7 +21,7 @@ def capture_video_page():
         "Используйте камеру для захвата видео. Видео будет обработано в реальном времени."
     )
 
-    video_frame_callback = VideoCallback(processor=Processor())
+    video_frame_callback = VideoCallback()
 
     ctx = webrtc_streamer(
         key="defect-detection",

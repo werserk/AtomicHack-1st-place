@@ -8,16 +8,6 @@ from supervision.detection.core import Detections
 from app.neuro.roboflow_net import RoboflowModel, RoboflowVisualizer
 
 
-@st.cache_resource
-def get_model() -> RoboflowModel:
-    return RoboflowModel()
-
-
-@st.cache_resource
-def get_visualizer() -> RoboflowVisualizer:
-    return RoboflowVisualizer()
-
-
 class Resizer:
     def __init__(self, size: Optional[tuple] = (640, 640)):
         self.size = size
@@ -38,8 +28,8 @@ class Resizer:
 
 class Processor:
     def __init__(self):
-        self.predictor = get_model()
-        self.visualizer = get_visualizer()
+        self.predictor = RoboflowModel()
+        self.visualizer = RoboflowVisualizer()
         self.resizer = Resizer()
 
     def __call__(self, image: np.ndarray) -> np.ndarray:
@@ -52,3 +42,8 @@ class Processor:
             image=reverted_image, predictions=predictions
         )
         return annotated_image
+
+
+@st.cache_resource
+def get_processor() -> Processor:
+    return Processor()

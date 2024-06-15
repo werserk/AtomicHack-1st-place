@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import streamlit as st
 
-from app.web.utils import Processor
+from app.web.utils import get_processor
 
 
 def upload_files_page():
@@ -11,7 +11,7 @@ def upload_files_page():
         "Загрузите изображение", type=["jpg", "jpeg", "png"]
     )
 
-    processor = Processor()
+    processor = get_processor()
 
     if uploaded_file is not None:
         file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
