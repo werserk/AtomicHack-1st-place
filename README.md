@@ -21,3 +21,9 @@ Install dependencies:
 ```bash
 poetry install
 ```
+
+Run streamlit:
+
+```bash
+streamlit run streamlit_app.py
+```
