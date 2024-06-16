@@ -6,7 +6,7 @@ import numpy as np
 import streamlit as st
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 
-from app.neuro.roboflow_net.core import RoboflowPredictions
+from app.neuro.utils import Predictions
 from app.web.utils import get_processor
 from app.web.utils.predict import Processor
 from app.web.utils.tables import generate_table, dataframe_to_excel_bytes
@@ -39,20 +39,22 @@ def load_image(uploaded_file: UploadedFile) -> Optional[np.array]:
 
 def display_images(original_image: np.array, processor: Processor) -> None:
     # try:
-        predictions = processor(original_image)
-        processed_image = processor.annotate_image(original_image, predictions)
+    predictions = processor(original_image)
+    processed_image = processor.annotate_image(original_image, predictions)
 
-        st.header("Обработанное изображение")
-        st.image(cv2.cvtColor(processed_image, cv2.COLOR_BGR2RGB))
+    st.header("Обработанное изображение")
+    st.image(cv2.cvtColor(processed_image, cv2.COLOR_BGR2RGB))
 
-        display_results_description(predictions)
-    # except Exception:
-    #     st.warning(
-    #         "Что-то пошло не так... Пожалуйста, попробуйте ещё раз или другой файл!"
-    #     )
+    display_results_description(predictions)
 
 
-def display_results_description(predictions: RoboflowPredictions) -> None:
+# except Exception:
+#     st.warning(
+#         "Что-то пошло не так... Пожалуйста, попробуйте ещё раз или другой файл!"
+#     )
+
+
+def display_results_description(predictions: Predictions) -> None:
     st.markdown("### Описание результатов")
     defects_table = generate_table(predictions)
 

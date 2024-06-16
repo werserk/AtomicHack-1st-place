@@ -3,10 +3,10 @@ import io
 import numpy as np
 import pandas as pd
 
-from app.neuro.roboflow_net.core import RoboflowPredictions
+from app.neuro.utils import Predictions
 
 
-def generate_table(predictions: RoboflowPredictions) -> pd.DataFrame:
+def generate_table(predictions: Predictions) -> pd.DataFrame:
     defects_data = []
     for i in range(len(predictions.labels)):
         detection = predictions.detections[i]

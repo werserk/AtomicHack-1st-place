@@ -1,13 +1,17 @@
-from typing import Optional, Dict, Union
+import logging
+from typing import Optional, Dict
 
 import cv2
 import numpy as np
 import streamlit as st
 from supervision.detection.core import Detections
 
-from app.neuro.roboflow_net import RoboflowModel, RoboflowVisualizer
-from app.neuro.roboflow_net.core import RoboflowPredictions
-from app.neuro.yolo_nas_net import YoloNasModel, YoloNasVisualizer
+from app.neuro.roboflow_net import RoboflowModel
+from app.neuro.utils import Predictions, Visualizer
+from app.neuro.yolo_nas_net import YoloNasModel
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 class Resizer:
@@ -32,14 +36,14 @@ class Processor:
     def __init__(self, model_type: str) -> None:
         if model_type == "roboflow":
             self.predictor = RoboflowModel()
-            self.visualizer = RoboflowVisualizer()
-            self.resizer = Resizer()
         elif model_type == "yolo_nas":
             self.predictor = YoloNasModel()
-            self.visualizer = YoloNasVisualizer()
-            self.resizer = Resizer()
         else:
-            raise ValueError(f"Unknown model type: {model_type}. We only support `roboflow` and `yolo_nas`.")
+            raise ValueError(
+                f"Unknown model type: {model_type}. We only support `roboflow` and `yolo_nas`."
+            )
+        self.resizer = Resizer()
+        self.visualizer = Visualizer()
 
     def predict_image(self, image: np.ndarray) -> np.ndarray:
         resized_image = self.resizer.apply(image)
@@ -52,14 +56,12 @@ class Processor:
         )
         return annotated_image
 
-    def predict(self, image: np.ndarray) -> RoboflowPredictions:
+    def predict(self, image: np.ndarray) -> Predictions:
         resized_image = self.resizer.apply(image)
         predictions = self.predictor(resized_image)
         return predictions
 
-    def annotate_image(
-            self, image: np.ndarray, predictions: Union[RoboflowPredictions, RoboflowPredictions]
-    ) -> np.ndarray:
+    def annotate_image(self, image: np.ndarray, predictions: Predictions) -> np.ndarray:
         reverted = self.resizer.revert(image, predictions.detections)
         reverted_image = reverted["image"]
         predictions.detections = reverted["detections"]
@@ -68,7 +70,7 @@ class Processor:
         )
         return annotated_image
 
-    def __call__(self, image: np.ndarray) -> RoboflowPredictions:
+    def __call__(self, image: np.ndarray) -> Predictions:
         return self.predict(image)
 
 

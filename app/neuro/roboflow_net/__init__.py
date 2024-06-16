@@ -1,4 +1,4 @@
 from .config import RoboflowConfig
-from .core import RoboflowModel, RoboflowVisualizer
+from .core import RoboflowModel
 
-__all__ = ["RoboflowConfig", "RoboflowModel", "RoboflowVisualizer"]
+__all__ = ["RoboflowConfig", "RoboflowModel"]

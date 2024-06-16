@@ -1,17 +1,12 @@
-from typing import Optional, List
+from typing import Optional
 
 import numpy as np
+import supervision as sv
 import torch
 from super_gradients.training import models
 
+from app.neuro.utils import Predictions
 from app.neuro.yolo_nas_net.config import YoloNasConfig
-
-
-class YoloNasPredictions:
-    def __init__(self, xyxy: np.ndarray, labels: List[str], conf: List[float]) -> None:
-        self.xyxy = xyxy
-        self.labels = labels
-        self.conf = conf
 
 
 class YoloNasModel:
@@ -26,13 +21,10 @@ class YoloNasModel:
             checkpoint_path=self.config.WEIGHTS_PATH,
         ).to(device)
 
-    def predict(self, image: np.ndarray) -> YoloNasPredictions:
+    def predict(self, image: np.ndarray) -> Predictions:
         predictions = self.model.predict(image)
-        return YoloNasPredictions(
-            xyxy=predictions.prediction.bboxes_xyxy,
-            labels=predictions.prediction.labels,
-            conf=predictions.prediction.confidence,
-        )
+        detections = sv.Detections.from_yolo_nas(predictions)
+        return Predictions(detections=detections, labels=predictions.prediction.labels)
 
-    def __call__(self, image: np.ndarray) -> YoloNasPredictions:
+    def __call__(self, image: np.ndarray) -> Predictions:
         return self.predict(image)
