@@ -28,12 +28,12 @@ def generate_table(predictions: RoboflowPredictions) -> pd.DataFrame:
 
 def dataframe_to_excel_bytes(df: pd.DataFrame) -> bytes:
     output = io.BytesIO()
-    writer = pd.ExcelWriter(output, engine='xlsxwriter')
-    df.to_excel(writer, index=False, sheet_name='Sheet1')
+    writer = pd.ExcelWriter(output, engine="xlsxwriter")
+    df.to_excel(writer, index=False, sheet_name="Sheet1")
     workbook = writer.book
-    worksheet = writer.sheets['Sheet1']
-    format1 = workbook.add_format({'num_format': '0.00'})
-    worksheet.set_column('A:A', None, format1)
+    worksheet = writer.sheets["Sheet1"]
+    format1 = workbook.add_format({"num_format": "0.00"})
+    worksheet.set_column("A:A", None, format1)
     writer._save()
     processed_data = output.getvalue()
     return processed_data

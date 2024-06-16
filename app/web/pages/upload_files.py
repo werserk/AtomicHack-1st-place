@@ -14,7 +14,9 @@ from app.web.utils.tables import generate_table, dataframe_to_excel_bytes
 
 def upload_files_page() -> None:
     st.header("Загрузить изображение")
-    uploaded_file = st.file_uploader("Загрузите изображение", type=["jpg", "jpeg", "png"])
+    uploaded_file = st.file_uploader(
+        "Загрузите изображение", type=["jpg", "jpeg", "png"]
+    )
 
     processor = get_processor()
 
@@ -45,7 +47,9 @@ def display_images(original_image: np.array, processor: Processor) -> None:
 
         display_results_description(predictions)
     except Exception:
-        st.warning("Что-то пошло не так... Пожалуйста, попробуйте ещё раз или другой файл!")
+        st.warning(
+            "Что-то пошло не так... Пожалуйста, попробуйте ещё раз или другой файл!"
+        )
 
 
 def display_results_description(predictions: RoboflowPredictions) -> None:

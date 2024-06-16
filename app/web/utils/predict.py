@@ -49,7 +49,9 @@ class Processor:
         predictions = self.predictor(resized_image)
         return predictions
 
-    def annotate_image(self, image: np.ndarray, predictions: RoboflowPredictions) -> np.ndarray:
+    def annotate_image(
+        self, image: np.ndarray, predictions: RoboflowPredictions
+    ) -> np.ndarray:
         reverted = self.resizer.revert(image, predictions.detections)
         reverted_image = reverted["image"]
         predictions.detections = reverted["detections"]

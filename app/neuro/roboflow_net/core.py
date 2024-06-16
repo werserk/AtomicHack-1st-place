@@ -10,7 +10,7 @@ from app.neuro.roboflow_net.config import RoboflowConfig, ModelConfig
 
 
 class RoboflowPredictions:
-    def __init__(self, detections: Detections, labels: list):
+    def __init__(self, detections: Detections, labels: list) -> None:
         self.detections = detections
         self.labels = labels
 
@@ -20,7 +20,7 @@ class RoboflowModel:
         self,
         roboflow_config: Optional[RoboflowConfig] = None,
         model_config: Optional[ModelConfig] = None,
-    ):
+    ) -> None:
         self.roboflow_config = (
             roboflow_config if roboflow_config is not None else RoboflowConfig()
         )
