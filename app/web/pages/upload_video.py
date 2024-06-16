@@ -29,10 +29,7 @@ def load_video(uploaded_file: UploadedFile) -> Optional[str]:
     try:
         file_bytes = uploaded_file.read()
         current_datetime = datetime.datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
-        file_path = os.path.join(
-            TEMP_DIR,
-            f"temp_video_{current_datetime}.{uploaded_file.name.split('.')[-1]}",
-        )
+        file_path = os.path.join(TEMP_DIR, f"temp_video_{current_datetime}.{uploaded_file.name.split('.')[-1]}")
         with open(file_path, "wb") as f:
             f.write(file_bytes)
         return file_path
@@ -43,7 +40,7 @@ def load_video(uploaded_file: UploadedFile) -> Optional[str]:
 
 
 def display_video(
-    video_path: str, processor: Processor, delete_temp_video: Optional[bool] = True
+        video_path: str, processor: Processor, delete_temp_video: Optional[bool] = True
 ) -> None:
     # try:
     cap = cv2.VideoCapture(video_path)
@@ -54,11 +51,11 @@ def display_video(
     print(f"Video resolution: {width}x{height}")
     print(f"Original FPS: {original_fps}")
 
-    target_fps = 5
+    target_fps = 10
     frame_interval = max(1, original_fps // target_fps)
     print(f"Frame interval: {frame_interval}")
 
-    processed_video_path = os.path.join(TEMP_DIR, f"processed_{video_path}")
+    processed_video_path = video_path.replace(".mp4", "_processed.mp4")
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
     out = cv2.VideoWriter(processed_video_path, fourcc, target_fps, (width, height))
 
@@ -99,12 +96,6 @@ def display_video(
     progress_bar.empty()
 
     display_results_description(processed_video_path)
-    current_datetime = datetime.datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
-    st.download_button(
-        label="📥 Скачать видео",
-        data=processed_video_path,
-        file_name=f"processed_video_{current_datetime}.mp4",
-    )
 
     if delete_temp_video and os.path.exists(video_path):
         os.remove(video_path)
@@ -119,10 +110,11 @@ def display_results_description(processed_video_path: str) -> None:
     st.header("Обработанное видео")
     st.video(processed_video_path)  # TODO: fix video display
 
+    current_datetime = datetime.datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
     st.download_button(
         label="📥 Скачать видео",
         data=processed_video_path,
-        file_name=processed_video_path,
+        file_name=f"processed_video_{current_datetime}.mp4",
     )
 
 

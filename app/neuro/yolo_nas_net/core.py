@@ -22,7 +22,7 @@ class YoloNasModel:
         ).to(device)
 
     def predict(self, image: np.ndarray) -> Predictions:
-        predictions = self.model.predict(image)
+        predictions = self.model.predict(image, conf=0.2, iou=0.5)
         detections = sv.Detections.from_yolo_nas(predictions)
         return Predictions(detections=detections, labels=predictions.prediction.labels)
 
