@@ -109,9 +109,9 @@ def display_video(video_path: str, processor: Processor) -> None:
 def display_results_description(processed_video_path: str) -> None:
     st.header("Обработанное видео")
 
-    video_file = open(processed_video_path, "rb")
-    video_bytes = video_file.read()
-    st.video(video_bytes)
+    # video_file = open(processed_video_path, "rb")
+    # video_bytes = video_file.read()
+    # st.video(video_bytes)
 
     current_datetime = datetime.datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
     if os.path.exists(processed_video_path):
