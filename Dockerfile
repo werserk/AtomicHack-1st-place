@@ -16,6 +16,8 @@ COPY pyproject.toml poetry.lock ./
 RUN poetry config virtualenvs.create false && \
     poetry install
 
+RUN pip install super-gradients
+
 EXPOSE 8501
 
 
