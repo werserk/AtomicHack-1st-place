@@ -38,20 +38,16 @@ def load_image(uploaded_file: UploadedFile) -> Optional[np.array]:
 
 
 def display_images(original_image: np.array, processor: Processor) -> None:
-    # try:
-    predictions = processor(original_image)
-    processed_image = processor.annotate_image(original_image, predictions)
+    try:
+        predictions = processor(original_image)
+        processed_image = processor.annotate_image(original_image, predictions)
 
-    st.header("Обработанное изображение")
-    st.image(cv2.cvtColor(processed_image, cv2.COLOR_BGR2RGB))
+        st.header("Обработанное изображение")
+        st.image(cv2.cvtColor(processed_image, cv2.COLOR_BGR2RGB))
 
-    display_results_description(predictions)
-
-
-# except Exception:
-#     st.warning(
-#         "Что-то пошло не так... Пожалуйста, попробуйте ещё раз или другой файл!"
-#     )
+        display_results_description(predictions)
+    except Exception:
+        st.warning("Что-то пошло не так... Пожалуйста, попробуйте ещё раз или другой файл!")
 
 
 def display_results_description(predictions: Predictions) -> None:
