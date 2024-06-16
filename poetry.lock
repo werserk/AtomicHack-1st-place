@@ -887,6 +887,17 @@ dnspython = ">=2.0.0"
 idna = ">=2.0.0"
 
 [[package]]
+name = "et-xmlfile"
+version = "1.1.0"
+description = "An implementation of lxml.xmlfile for the standard library"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "et_xmlfile-1.1.0-py3-none-any.whl", hash = "sha256:a2ba85d1d6a74ef63837eed693bcb89c3f752169b0e3e7ae5b16ca5e1b3deada"},
+    {file = "et_xmlfile-1.1.0.tar.gz", hash = "sha256:8eb9e2bc2f8c97e37a2dc85a09ecdcdec9d8a396530a6d5a33b30b9a92da0c5c"},
+]
+
+[[package]]
 name = "exceptiongroup"
 version = "1.2.1"
 description = "Backport of PEP 654 (exception groups)"
@@ -2354,6 +2365,20 @@ numpy = [
     {version = ">=1.21.2", markers = "platform_system != \"Darwin\" and python_version >= \"3.10\" and python_version < \"3.11\""},
     {version = ">=1.19.3", markers = "platform_system == \"Linux\" and platform_machine == \"aarch64\" and python_version >= \"3.8\" and python_version < \"3.10\" or python_version > \"3.9\" and python_version < \"3.10\" or python_version >= \"3.9\" and platform_system != \"Darwin\" and python_version < \"3.10\" or python_version >= \"3.9\" and platform_machine != \"arm64\" and python_version < \"3.10\""},
 ]
+
+[[package]]
+name = "openpyxl"
+version = "3.1.4"
+description = "A Python library to read/write Excel 2010 xlsx/xlsm files"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "openpyxl-3.1.4-py2.py3-none-any.whl", hash = "sha256:ec17f6483f2b8f7c88c57e5e5d3b0de0e3fb9ac70edc084d28e864f5b33bbefd"},
+    {file = "openpyxl-3.1.4.tar.gz", hash = "sha256:8d2c8adf5d20d6ce8f9bca381df86b534835e974ed0156dacefa76f68c1d69fb"},
+]
+
+[package.dependencies]
+et-xmlfile = "*"
 
 [[package]]
 name = "orjson"
@@ -4529,6 +4554,17 @@ files = [
 ]
 
 [[package]]
+name = "xlsxwriter"
+version = "3.2.0"
+description = "A Python module for creating Excel XLSX files."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "XlsxWriter-3.2.0-py3-none-any.whl", hash = "sha256:ecfd5405b3e0e228219bcaf24c2ca0915e012ca9464a14048021d21a995d490e"},
+    {file = "XlsxWriter-3.2.0.tar.gz", hash = "sha256:9977d0c661a72866a61f9f7a809e25ebbb0fb7036baa3b9fe74afcfca6b3cb8c"},
+]
+
+[[package]]
 name = "zipp"
 version = "3.19.2"
 description = "Backport of pathlib-compatible object wrapper for zip files"
@@ -4546,4 +4582,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = ">3.9.7,<=3.12.3"
-content-hash = "e1eba6407da1918937f3ae07dfa6593707474224f1b6f0672200d2aa37f67180"
+content-hash = "b9153c1ba0b16bc87203a483534c4b54be22c75948ce7812637bb5f2066b98c1"

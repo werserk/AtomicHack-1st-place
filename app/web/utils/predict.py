@@ -6,6 +6,7 @@ import streamlit as st
 from supervision.detection.core import Detections
 
 from app.neuro.roboflow_net import RoboflowModel, RoboflowVisualizer
+from app.neuro.roboflow_net.core import RoboflowPredictions
 
 
 class Resizer:
@@ -32,7 +33,7 @@ class Processor:
         self.visualizer = RoboflowVisualizer()
         self.resizer = Resizer()
 
-    def __call__(self, image: np.ndarray) -> np.ndarray:
+    def predict_image(self, image: np.ndarray) -> np.ndarray:
         resized_image = self.resizer.apply(image)
         predictions = self.predictor(resized_image)
         reverted = self.resizer.revert(image, predictions.detections)
@@ -42,6 +43,23 @@ class Processor:
             image=reverted_image, predictions=predictions
         )
         return annotated_image
+
+    def predict(self, image: np.ndarray) -> RoboflowPredictions:
+        resized_image = self.resizer.apply(image)
+        predictions = self.predictor(resized_image)
+        return predictions
+
+    def annotate_image(self, image: np.ndarray, predictions: RoboflowPredictions) -> np.ndarray:
+        reverted = self.resizer.revert(image, predictions.detections)
+        reverted_image = reverted["image"]
+        predictions.detections = reverted["detections"]
+        annotated_image = self.visualizer.plot_predictions(
+            image=reverted_image, predictions=predictions
+        )
+        return annotated_image
+
+    def __call__(self, image: np.ndarray) -> RoboflowPredictions:
+        return self.predict(image)
 
 
 @st.cache_resource

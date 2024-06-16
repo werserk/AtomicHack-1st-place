@@ -6,7 +6,7 @@ from app.web.pages import capture_video, upload_files, welcome
 def start_web_app():
     st.set_page_config(
         page_title="Defect Detection App",
-        page_icon="🤖",
+        page_icon="📦",
     )
 
     page_names_to_funcs = {

@@ -31,5 +31,5 @@ streamlit run streamlit_app.py
 Run backend (if you want to use API)
 
 ```bash
-uvicorn run_backend:app --host 0.0.0.0 --port 8000
+uvicorn app.server:app --host 0.0.0.0 --port 8000
 ```
