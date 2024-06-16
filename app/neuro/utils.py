@@ -12,7 +12,7 @@ class Predictions:
 
 
 def yolo_nas_predictions_to_supervision_detections(
-        predictions: np.ndarray,
+    predictions: np.ndarray,
 ) -> sv.Detections:
     return sv.Detections.from_yolo_nas(predictions)
 
@@ -23,10 +23,10 @@ class Visualizer:
         self.bounding_box_annotator = sv.BoundingBoxAnnotator()
 
     def plot_predictions(
-            self,
-            image: np.ndarray,
-            predictions: Predictions,
-            snow_labels: Optional[bool] = True,
+        self,
+        image: np.ndarray,
+        predictions: Predictions,
+        snow_labels: Optional[bool] = True,
     ) -> np.ndarray:
         detections = predictions.detections
         annotated_image = self.bounding_box_annotator.annotate(

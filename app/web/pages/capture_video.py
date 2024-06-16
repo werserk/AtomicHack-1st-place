@@ -1,12 +1,19 @@
 import logging
 
 import av
+import cv2
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer, WebRtcMode
 
 from app.web.utils import get_processor
 
 logger = logging.getLogger(__name__)
+
+
+def dummy_callback(frame: av.VideoFrame) -> av.VideoFrame:
+    image = frame.to_ndarray(format="bgr24")
+    annotated_image = cv2.bitwise_not(image)
+    return av.VideoFrame.from_ndarray(annotated_image, format="bgr24")
 
 
 class VideoCallback:
@@ -30,6 +37,7 @@ def capture_video_page():
 
     ctx = webrtc_streamer(
         key="defect-detection",
+        # If you have troubles with ICE (bad network connection) swap to dummy_callback
         video_frame_callback=video_frame_callback,
         media_stream_constraints={"video": True, "audio": False},
         async_processing=False,

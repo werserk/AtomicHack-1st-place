@@ -29,7 +29,10 @@ def load_video(uploaded_file: UploadedFile) -> Optional[str]:
     try:
         file_bytes = uploaded_file.read()
         current_datetime = datetime.datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
-        file_path = os.path.join(TEMP_DIR, f"temp_video_{current_datetime}.{uploaded_file.name.split('.')[-1]}")
+        file_path = os.path.join(
+            TEMP_DIR,
+            f"temp_video_{current_datetime}.{uploaded_file.name.split('.')[-1]}",
+        )
         with open(file_path, "wb") as f:
             f.write(file_bytes)
         return file_path
@@ -50,10 +53,16 @@ def display_video(video_path: str, processor: Processor) -> None:
         frame_interval = max(1, original_fps // target_fps)
 
         processed_video_path = video_path.replace(".mp4", "_processed.mp4")
-        video_writer = cv2.VideoWriter(processed_video_path, cv2.VideoWriter_fourcc(*"mp4v"), target_fps,
-                                       (width, height))
+        video_writer = cv2.VideoWriter(
+            processed_video_path,
+            cv2.VideoWriter_fourcc(*"mp4v"),
+            target_fps,
+            (width, height),
+        )
 
-        total_frames_to_process = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) // frame_interval
+        total_frames_to_process = (
+            int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) // frame_interval
+        )
 
         frame_count = 0
         frame_processed = 0
@@ -91,14 +100,16 @@ def display_video(video_path: str, processor: Processor) -> None:
         display_results_description(processed_video_path)
 
     except Exception as e:
-        st.warning("Что-то пошло не так... Пожалуйста, попробуйте ещё раз или другой файл!")
+        st.warning(
+            "Что-то пошло не так... Пожалуйста, попробуйте ещё раз или другой файл!"
+        )
         st.error(e)
 
 
 def display_results_description(processed_video_path: str) -> None:
     st.header("Обработанное видео")
 
-    video_file = open(processed_video_path, 'rb')
+    video_file = open(processed_video_path, "rb")
     video_bytes = video_file.read()
     st.video(video_bytes)
 
