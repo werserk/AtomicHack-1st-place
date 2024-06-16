@@ -15,13 +15,25 @@ services:
 #        labels:
 #            - "traefik.enable=true"
 #            - "traefik.http.routers.dockage1.entrypoints=web, websecure"
-#            - "traefik.http.routers.dockage1.rule=Host(`test.xplogene-ai.com`)"
+#            - "traefik.http.routers.dockage1.rule=Host(`atomhack.xplogene-ai.com`)"
 #            - "traefik.http.routers.dockage1.tls=true"
 #            - "traefik.http.routers.dockage1.tls.certresolver=production"
 #            - "traefik.tcp.services.kafka-broker.loadbalancer.server.port=8501"
 
         command: >
             bash -c "ls -la && streamlit run streamlit_app.py --server.port 8501"
+
+        environment:
+            - NVIDIA_VISIBLE_DEVICES=all
+        deploy:
+          mode: replicated
+          replicas: 1
+          resources:
+            reservations:
+              devices:
+                - driver: nvidia
+                  device_ids: [ '0' ]
+                  capabilities: [ gpu ]
 
 
 #
