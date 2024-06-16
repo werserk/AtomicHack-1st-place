@@ -12,7 +12,7 @@ from app.web.utils.predict import Processor
 from app.web.utils.tables import generate_table, dataframe_to_excel_bytes
 
 
-def upload_files_page() -> None:
+def upload_image_page() -> None:
     st.header("Загрузить изображение")
     uploaded_file = st.file_uploader(
         "Загрузите изображение", type=["jpg", "jpeg", "png"]
