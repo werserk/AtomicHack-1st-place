@@ -14,8 +14,9 @@ def dummy_callback(frame: av.VideoFrame) -> av.VideoFrame:
     image = frame.to_ndarray(format="bgr24")
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     edged = cv2.Canny(gray, 30, 200)
-    contours, hierarchy = cv2.findContours(edged,
-                                           cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    contours, hierarchy = cv2.findContours(
+        edged, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE
+    )
     annotated_image = cv2.drawContours(image, contours, -1, (0, 255, 0), 1)
     return av.VideoFrame.from_ndarray(annotated_image, format="bgr24")
 

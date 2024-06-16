@@ -4,10 +4,12 @@
 
 ## Ссылки
 
-Сайт соревнования: https://atomichack.ru/ \
-GitHub: https://github.com/werserk/AtomicHack \
+Сайт соревнования: [atomichack.ru](https://atomichack.ru/) \
+GitHub: [github.com/werserk/AtomicHack](https://github.com/werserk/AtomicHack) \
 Презентация: [LINK](https://docs.google.com/presentation/d/1rcH_EbmP8-rjSrcMAn7ZxIdogTCiCjg5LeDol3n1LJk/edit#slide=id.g2e5e08b022d_3_69) \
-Решение: https://welding.medpaint.ru
+Решение: [welding.medpaint.ru](https://welding.medpaint.ru) \
+Веса лучшей на нашей валидации модели: [LINK](https://drive.google.com/drive/folders/1SxKk1MI6GMpJQz-rJXD6erh0uTLwykaD?usp=sharing) \
+Полный код: [LINK]()
 
 ## Описание
 
@@ -69,6 +71,13 @@ streamlit run streamlit_app.py
 ```bash
 uvicorn app.server:app --host 0.0.0.0 --port 8000
 ```
+
+## Предсказание одного из submission.csv
+
+```bash
+python3 submit.py
+```
+Возможно потребуется сделать это изнутри докера.
 
 ## Структура проекта
 

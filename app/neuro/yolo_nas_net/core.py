@@ -12,7 +12,9 @@ from app.neuro.yolo_nas_net.config import YoloNasConfig
 class YoloNasModel:
     def __init__(self, config: Optional[YoloNasConfig] = None) -> None:
         self.config = config if config is not None else YoloNasConfig()
-        device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
+        device = (
+            torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
+        )
         self.model = models.get(
             model_name=self.config.MODEL_NAME,
             num_classes=self.config.NUM_CLASSES,
