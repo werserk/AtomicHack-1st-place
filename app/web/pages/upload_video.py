@@ -39,80 +39,80 @@ def load_video(uploaded_file: UploadedFile) -> Optional[str]:
         return None
 
 
-def display_video(
-        video_path: str, processor: Processor, delete_temp_video: Optional[bool] = True
-) -> None:
-    # try:
-    cap = cv2.VideoCapture(video_path)
-    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    original_fps = int(cap.get(cv2.CAP_PROP_FPS))
+def display_video(video_path: str, processor: Processor) -> None:
+    try:
+        cap = cv2.VideoCapture(video_path)
+        width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        original_fps = int(cap.get(cv2.CAP_PROP_FPS))
 
-    print(f"Video resolution: {width}x{height}")
-    print(f"Original FPS: {original_fps}")
+        target_fps = 5
+        frame_interval = max(1, original_fps // target_fps)
 
-    target_fps = 10
-    frame_interval = max(1, original_fps // target_fps)
-    print(f"Frame interval: {frame_interval}")
+        processed_video_path = video_path.replace(".mp4", "_processed.mp4")
+        video_writer = cv2.VideoWriter(processed_video_path, cv2.VideoWriter_fourcc(*"mp4v"), target_fps,
+                                       (width, height))
 
-    processed_video_path = video_path.replace(".mp4", "_processed.mp4")
-    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-    out = cv2.VideoWriter(processed_video_path, fourcc, target_fps, (width, height))
+        total_frames_to_process = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) // frame_interval
 
-    total_frames_to_process = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) // frame_interval
-    print(f"Total frames to process: {total_frames_to_process}")
+        frame_count = 0
+        frame_processed = 0
 
-    frame_count = 0
-    frame_processed = 0
+        progress_bar = st.progress(0, text="Обработка видео...")
+        prev_frame = None
 
-    progress_bar = st.progress(0, text="Обработка видео...")
-    prev_frame = None
+        while cap.isOpened():
+            ret, frame = cap.read()
+            if not ret:
+                break
 
-    while cap.isOpened():
-        ret, frame = cap.read()
-        if not ret:
-            break
+            if frame_count % frame_interval == 0:
+                predictions = processor(frame)
+                annotated_frame = processor.annotate_image(frame, predictions)
+                video_writer.write(annotated_frame)
+                frame_processed += 1
+                progress_bar.progress(
+                    min(frame_processed / total_frames_to_process, 1),
+                    text="Обработка видео...",
+                )
+                prev_frame = annotated_frame
+            else:
+                if prev_frame is None:
+                    continue
+                video_writer.write(prev_frame)
 
-        if frame_count % frame_interval == 0:
-            predictions = processor(frame)
-            annotated_frame = processor.annotate_image(frame, predictions)
-            out.write(annotated_frame)
-            frame_processed += 1
-            progress_bar.progress(
-                min(frame_processed / total_frames_to_process, 1),
-                text="Обработка видео...",
-            )
-            prev_frame = annotated_frame
-        else:
-            if prev_frame is None:
-                continue
-            out.write(prev_frame)
+            frame_count += 1
 
-        frame_count += 1
+        cap.release()
+        video_writer.release()
 
-    cap.release()
-    out.release()
+        progress_bar.empty()
 
-    progress_bar.empty()
+        display_results_description(processed_video_path)
 
-    display_results_description(processed_video_path)
-
-
-# except Exception as e:
-#     st.warning("Что-то пошло не так... Пожалуйста, попробуйте ещё раз или другой файл!")
-#     st.error(e)
+    except Exception as e:
+        st.warning("Что-то пошло не так... Пожалуйста, попробуйте ещё раз или другой файл!")
+        st.error(e)
 
 
 def display_results_description(processed_video_path: str) -> None:
     st.header("Обработанное видео")
-    st.video(processed_video_path)  # TODO: fix video display
+
+    video_file = open(processed_video_path, 'rb')
+    video_bytes = video_file.read()
+    st.video(video_bytes)
 
     current_datetime = datetime.datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
-    st.download_button(
-        label="📥 Скачать видео",
-        data=processed_video_path,
-        file_name=f"processed_video_{current_datetime}.mp4",
-    )
+    if os.path.exists(processed_video_path):
+        with open(processed_video_path, "rb") as file:
+            st.download_button(
+                label="📥 Скачать видео",
+                data=file,
+                file_name=f"processed_video_{current_datetime}.mp4",
+                mime="video/mpeg",
+            )
+    else:
+        st.error("Процессированное видео не найдено.")
 
 
 if __name__ == "__main__":
