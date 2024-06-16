@@ -12,6 +12,7 @@ supervision = "^0.21.0"
 openpyxl = "^3.1.4"
 xlsxwriter = "^3.2.0"
 torch = "^2.3.1"
+twilio = "^9.1.1"
 
 
 [tool.poetry.group.dev.dependencies]

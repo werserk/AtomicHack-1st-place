@@ -1,8 +1,13 @@
+import logging
+import time
+
 import av
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer
+from streamlit_webrtc import webrtc_streamer, WebRtcMode
 
 from app.web.utils import get_processor
+
+logger = logging.getLogger(__name__)
 
 
 class VideoCallback:
@@ -11,8 +16,11 @@ class VideoCallback:
 
     def __call__(self, frame: av.VideoFrame) -> av.VideoFrame:
         image = frame.to_ndarray(format="bgr24")
-        processed_image = self.processor(image)
-        return av.VideoFrame.from_ndarray(processed_image, format="bgr24")
+        start_time = time.time()
+        predictions = self.processor(image)
+        logger.info(f"Processed image in {time.time() - start_time:.2f} seconds")
+        annotated_image = self.processor.annotate_image(image, predictions)
+        return av.VideoFrame.from_ndarray(annotated_image, format="bgr24")
 
 
 def capture_video_page():
@@ -28,4 +36,5 @@ def capture_video_page():
         video_frame_callback=video_frame_callback,
         media_stream_constraints={"video": True, "audio": False},
         async_processing=False,
+        mode=WebRtcMode.SENDRECV,
     )

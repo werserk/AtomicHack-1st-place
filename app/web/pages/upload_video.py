@@ -19,7 +19,7 @@ def upload_video_page() -> None:
 
     processor = get_processor()
 
-    if uploaded_file is not None:
+    if st.button("Обработать видео") and uploaded_file is not None:
         original_video = load_video(uploaded_file)
         if original_video is not None:
             display_video(original_video, processor)
@@ -96,9 +96,6 @@ def display_video(
     progress_bar.empty()
 
     display_results_description(processed_video_path)
-
-    if delete_temp_video and os.path.exists(video_path):
-        os.remove(video_path)
 
 
 # except Exception as e:
