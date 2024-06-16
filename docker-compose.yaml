@@ -22,6 +22,7 @@ services:
             bash -c "ls -la && streamlit run app/main.py --server.port 8501"
 
 
+
 networks:
   default:
     name: traefik
