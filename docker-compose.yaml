@@ -6,7 +6,7 @@ services:
         volumes:
 #            - ./app:/app/app/
 #            - ./models:/app/models
-            - /home/tema/CODE/AtomicHack:/app
+            - ./:/app
         ports:
             - 8501:8501
 
