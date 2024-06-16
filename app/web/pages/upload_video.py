@@ -40,7 +40,7 @@ def load_video(uploaded_file: UploadedFile) -> Optional[str]:
 
 
 def display_video(video_path: str, processor: Processor, delete_temp_video: Optional[bool] = True) -> None:
-    try:
+    # try:
         cap = cv2.VideoCapture(video_path)
         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -101,9 +101,9 @@ def display_video(video_path: str, processor: Processor, delete_temp_video: Opti
         if delete_temp_video and os.path.exists(video_path):
             os.remove(video_path)
 
-    except Exception as e:
-        st.warning("Что-то пошло не так... Пожалуйста, попробуйте ещё раз или другой файл!")
-        st.error(e)
+    # except Exception as e:
+    #     st.warning("Что-то пошло не так... Пожалуйста, попробуйте ещё раз или другой файл!")
+    #     st.error(e)
 
 
 def display_results_description(processed_video_path: str) -> None:

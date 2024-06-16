@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 import numpy as np
 import torch
@@ -8,7 +8,7 @@ from app.neuro.yolo_nas_net.config import YoloNasConfig
 
 
 class YoloNasPredictions:
-    def __init__(self, xyxy: np.ndarray, labels: np.ndarray, conf: np.ndarray) -> None:
+    def __init__(self, xyxy: np.ndarray, labels: List[str], conf: List[float]) -> None:
         self.xyxy = xyxy
         self.labels = labels
         self.conf = conf

@@ -38,7 +38,7 @@ def load_image(uploaded_file: UploadedFile) -> Optional[np.array]:
 
 
 def display_images(original_image: np.array, processor: Processor) -> None:
-    try:
+    # try:
         predictions = processor(original_image)
         processed_image = processor.annotate_image(original_image, predictions)
 
@@ -46,10 +46,10 @@ def display_images(original_image: np.array, processor: Processor) -> None:
         st.image(cv2.cvtColor(processed_image, cv2.COLOR_BGR2RGB))
 
         display_results_description(predictions)
-    except Exception:
-        st.warning(
-            "Что-то пошло не так... Пожалуйста, попробуйте ещё раз или другой файл!"
-        )
+    # except Exception:
+    #     st.warning(
+    #         "Что-то пошло не так... Пожалуйста, попробуйте ещё раз или другой файл!"
+    #     )
 
 
 def display_results_description(predictions: RoboflowPredictions) -> None:
