@@ -2,6 +2,10 @@
 
 ![atomic_hack_logo.png](.images/atomic_hack_logo.png)
 
+## Проверка решения
+
+**ДЛЯ ПРОВЕРКИ РЕШЕНИЯ СМОТРЕТЬ ФАЙЛ `VALIDATE.md`**
+
 ## Ссылки
 
 Сайт соревнования: [atomichack.ru](https://atomichack.ru/) \
