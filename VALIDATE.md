@@ -3,7 +3,7 @@
 ## 1. Подготовка весов
 
 Для запуска модели надо веса скачать веса
-с [диска](https://drive.google.com/drive/folders/1jpuMyeurWTFfz9V53p-9iKq0o_DcJ_cU?usp=sharing) в папку models
+с [диска](https://drive.google.com/drive/folders/1jpuMyeurWTFfz9V53p-9iKq0o_DcJ_cU?usp=sharing) в папку `models`
 Должно получиться так:
 
 ```
