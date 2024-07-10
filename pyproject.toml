@@ -1,35 +1,26 @@
 [tool.poetry]
-name = "atomichack"
+name = "atomhack-submit"
 version = "0.1.0"
 description = ""
-authors = ["team 4U (werserk, blogerlu)"]
+authors = ["blogerlu <a.v.vlasov2003@gmial.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">3.9.7,<=3.12.3"
-roboflow = "^1.1.32"
+pandas = "^2.2.2"
+imageio = "^2.34.2"
 supervision = "^0.21.0"
-openpyxl = "^3.1.4"
+roboflow = "^1.1.34"
+openpyxl = "^3.1.5"
 xlsxwriter = "^3.2.0"
-torch = "^2.3.1"
-twilio = "^9.1.1"
-
-
-[tool.poetry.group.dev.dependencies]
-jupyter = "^1.0.0"
-black = {extras = ["jupyter"], version = "^24.4.2"}
-flake8 = "^7.0.0"
-tqdm = "^4.66.4"
-
-
-[tool.poetry.group.web.dependencies]
-opencv-python = "^4.10.0.82"
-streamlit = "^1.35.0"
-streamlit-webrtc = "^0.47.7"
-
-
-[tool.poetry.group.backend.dependencies]
+twilio = "^9.2.3"
 fastapi = "^0.111.0"
+streamlit = "^1.36.0"
+streamlit-webrtc = "^0.47.7"
+opencv-python = "^4.10.0.84"
+imagehash = "^4.3.1"
+jupyter = "^1.0.0"
+
 
 [build-system]
 requires = ["poetry-core"]
