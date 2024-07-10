@@ -12,8 +12,7 @@
 GitHub: [github.com/werserk/AtomicHack](https://github.com/werserk/AtomicHack) \
 Презентация: [LINK](https://docs.google.com/presentation/d/1rcH_EbmP8-rjSrcMAn7ZxIdogTCiCjg5LeDol3n1LJk/edit#slide=id.g2e5e08b022d_3_69) \
 Решение: [welding.medpaint.ru](https://welding.medpaint.ru) \
-Веса лучшей на нашей валидации модели: [LINK](https://drive.google.com/drive/folders/1SxKk1MI6GMpJQz-rJXD6erh0uTLwykaD?usp=sharing) \
-Полный код: [LINK]()
+Веса моделей: [drive.google.com](https://drive.google.com/drive/folders/1jpuMyeurWTFfz9V53p-9iKq0o_DcJ_cU?usp=sharing)
 
 ## Описание
 
